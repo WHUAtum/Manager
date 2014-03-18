@@ -20,6 +20,7 @@ public class DBManager {
 			PASS = password;
 			DB_URL = URL;
 			Class.forName("com.mysql.jdbc.Driver");
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -29,10 +30,12 @@ public class DBManager {
 	
 	public DBManager() {
 		try {
+			
 			USER = "root";
 			PASS = "";
 			DB_URL = "jdbc:mysql://localhost:3306";
 			Class.forName("com.mysql.jdbc.Driver");
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -46,6 +49,7 @@ public class DBManager {
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 			System.out.println("Connect to database successfully");
 			stmt = conn.createStatement();
+			init();
 			return true;
 		} catch (SQLException se) {
 			// Handle errors for JDBC
@@ -73,7 +77,7 @@ public class DBManager {
 	}
 
 	public void del(String mac,String table) {
-		String sql="delete from "+table+" where mac='"+mac+"'";
+		String sql="delete from "+table+" where mac= '"+mac+"' ;";
 		System.out.println(sql);
 		try {
 			stmt.execute(sql);
@@ -82,8 +86,15 @@ public class DBManager {
 			System.out.println("unregister error!");
 			e.printStackTrace();
 		}
+		
 	}
 	
+	public void init()throws Exception{
+		String sql="drop table test.device;";
+		stmt.execute(sql);
+		sql="CREATE TABLE test.device (  id int(11) NOT NULL,  mac varchar(45) NOT NULL,  PRIMARY KEY (mac)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+		stmt.execute(sql);
+	}
 	
 	public void end() throws Exception{
 		
@@ -93,11 +104,11 @@ public class DBManager {
 
 	public boolean isexist(String mac, String table) {
 
-		String sql = "SELECT " + mac + " FROM " + table + " order by id";
+		String sql = "SELECT " + "mac" + " FROM " + table +" where mac='"+mac+"'"+ " order by id ";
 		System.out.println(sql);
 		try {
 			ResultSet rs = stmt.executeQuery(sql);
-			if(!rs.wasNull())
+			if(rs.next())
 				return true;
 			else return false;
 		} catch (Exception e) {

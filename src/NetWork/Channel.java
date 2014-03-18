@@ -63,7 +63,7 @@ public class Channel extends Thread {
 			}
 			newjson.put("res", res.toString());
 			newjson.put("mac", mac.toString());
-			newjson.put("pos", pos.toString());
+			newjson.put("pos", oldjson.get(pos));
 			return newjson.toString();
 
 		} catch (Exception e) {
