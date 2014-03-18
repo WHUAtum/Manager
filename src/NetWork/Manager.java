@@ -24,12 +24,12 @@ public class Manager {
         
 		try{
 			//connect the Unity3D Server
-			DBManager db=new DBManager();
+			DBManager db=new DBManager("root", "" , "jdbc:mysql://localhost:3306");
 			System.out.print("Press enter if the Server ready!");		
 			System.in.read();
-			Socket ss=new Socket("192.168.1.38",17000); 
+			Socket ss=new Socket("192.168.1.103",17000); 
 	        System.out.println("Connect the Server successfully!");		
-	        if(!db.connectdb()){
+	        while(!db.connectdb()){
 	        	 System.out.println("please check the database and press enter!");		
 	        	 System.in.read();
 	        }

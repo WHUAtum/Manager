@@ -33,25 +33,37 @@ public class Channel extends Thread {
 			String res = oldjson.get("res").toString();
 			String mac = oldjson.get("mac").toString();
 			String pos = oldjson.get("pos").toString();
-
-			if (res == "register") {
-				if (db.isexist(mac, table)) 
-					db.add(mac + "," + res, table);
-				else
-					res="move";
-			}
-			if (res == "unregister" || res == "move") {
+			System.out.println(res+" "+pos+" "+res=="r");
+			System.out.println(res.contains("r"));
+			if (res.contains("r")) {
 				if (!db.isexist(mac, table)) {
-						db.add(mac + "," + res, table);
-						res = "register";
+					System.out.println("registering");
+					db.add(mac , table);
+					
 				}
-				if(res=="unregister"){
-						db.del(mac,table);
+				else{
+					res="m";
+					System.out.println("mac exist,we guess you will move");
+
 				}
 			}
-			newjson.put("res", res);
-			newjson.put("mac", mac);
-			newjson.put("pos", pos);
+			if (res.contains("u") || res.contains("m")) {
+				if (!db.isexist(mac, table)) {
+						db.add(mac  , table);
+						System.out.println("mac is not exist,we guess you will register");
+
+						res = "r";
+				}
+				if(res.contains("u")){
+						System.out.println("unregistering");
+
+						db.del(mac,table);
+						
+				}
+			}
+			newjson.put("res", res.toString());
+			newjson.put("mac", mac.toString());
+			newjson.put("pos", pos.toString());
 			return newjson.toString();
 
 		} catch (Exception e) {

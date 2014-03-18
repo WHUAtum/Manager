@@ -13,7 +13,8 @@ public class DBManager {
 	public Connection conn = null;
 	public Statement stmt = null;
 
-	public void DBManager(String username, String password, String URL) {
+	
+	public DBManager(String username, String password, String URL) {
 		try {
 			USER = username;
 			PASS = password;
@@ -25,7 +26,8 @@ public class DBManager {
 		}
 	}
 
-	public void DBManager() {
+	
+	public DBManager() {
 		try {
 			USER = "root";
 			PASS = "";
@@ -59,7 +61,8 @@ public class DBManager {
 	
 
 	public void add(String valus, String table) {
-		String sql = "INSERT INTO " + table + "values(" + valus + ")";
+		String sql = "INSERT INTO " + table + " values(0,'" + valus + "')";
+		System.out.println(sql);
 		try {
 			stmt.execute(sql);
 			System.out.println("register successful!");
@@ -70,7 +73,8 @@ public class DBManager {
 	}
 
 	public void del(String mac,String table) {
-		String sql="delete from "+table+" where mac="+mac;
+		String sql="delete from "+table+" where mac='"+mac+"'";
+		System.out.println(sql);
 		try {
 			stmt.execute(sql);
 			System.out.println("unregister successful!");
@@ -90,6 +94,7 @@ public class DBManager {
 	public boolean isexist(String mac, String table) {
 
 		String sql = "SELECT " + mac + " FROM " + table + " order by id";
+		System.out.println(sql);
 		try {
 			ResultSet rs = stmt.executeQuery(sql);
 			if(!rs.wasNull())
