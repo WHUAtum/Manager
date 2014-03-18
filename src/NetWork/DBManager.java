@@ -21,6 +21,7 @@ public class DBManager {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (Exception e) {
 
+			System.out.println("Load the driver fail");
 			e.printStackTrace();
 		}
 	}
