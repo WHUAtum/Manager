@@ -32,41 +32,25 @@ public class Channel extends Thread {
 			JSONObject newjson = new JSONObject();
 			String res = oldjson.get("res").toString();
 			String mac = oldjson.get("mac").toString();
-			String pos = oldjson.get("pos").toString();
-			System.out.println(res+" "+pos+" "+res=="r");
-			System.out.println(res.contains("r"));
-			if (res.contains("r")) {
-				if (!db.isexist(mac, table)) {
+		
+			if (!db.isexist(mac, table)) {
 					System.out.println("registering");
 					db.add(mac , table);
-					
+					res="r";
 				}
-				else{
+			else{
 					res="m";
-					System.out.println("mac exist,we guess you will move");
+					System.out.println("move");
 
-				}
 			}
-			if (res.contains("u") || res.contains("m")) {
-				if (!db.isexist(mac, table)) {
-						db.add(mac  , table);
-						System.out.println("mac is not exist,we guess you will register");
-
-						res = "r";
-				}
-				if(res.contains("u")){
-						System.out.println("unregistering");
-
-						db.del(mac,table);
-						
-				}
-			}
+			
 			newjson.put("res", res.toString());
 			newjson.put("mac", mac.toString());
-			newjson.put("pos", oldjson.get(pos));
+			newjson.put("pos", oldjson.get("pos"));
 			return newjson.toString();
 
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			return s;
 		}
