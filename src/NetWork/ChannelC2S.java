@@ -7,7 +7,7 @@ import org.json.simple.parser.*;
 
 import java.io.*;
 
-public class Channel extends Thread {
+public class ChannelC2S extends Thread {
 	public static byte[] buffer = new byte[1024];
 	public static String table = "test.device";
 	DBManager db;
@@ -16,7 +16,7 @@ public class Channel extends Thread {
 	// Socket ;
 	Socket sendsocket, receivesocket;
 
-	Channel(Socket ss, Socket rs, DBManager db) {
+	ChannelC2S(Socket ss, Socket rs, DBManager db) {
 		sendsocket = ss;
 		receivesocket = rs;
 		sendport = 17000;
@@ -73,7 +73,7 @@ public class Channel extends Thread {
 					System.out.println(to3du);
 
 				}
-				Thread.sleep(1000);
+			//	Thread.sleep(1000);
 
 			}
 		} catch (Exception e) {

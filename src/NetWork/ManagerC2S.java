@@ -2,7 +2,7 @@ package NetWork;
 
 import java.net.*;
 
-public class Manager {
+public class ManagerC2S {
 	static InetAddress Register(){
 		InetAddress address;
 		try{
@@ -41,7 +41,7 @@ public class Manager {
 				Socket rs=s.accept();				
 				System.out.println("Client connected");
 			    //Create a new channel to for a device
-				new Channel(ss,rs,db).start();			
+				new ChannelC2S(ss,rs,db).start();			
 			}
 		}
 		catch(Exception e){
